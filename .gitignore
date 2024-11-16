@@ -1,8 +1,4 @@
-# Ignore node_modules
-node_modules/
-# Logs
-logs
-*.log
-npm-debug.log*
-# Ignore compiled files
-*.lock
+src/.env
+.DS_Store
+.thumbs.db
+node_modules
