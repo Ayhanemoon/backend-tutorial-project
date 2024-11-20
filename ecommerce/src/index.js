@@ -33,9 +33,6 @@ mongoose.connect(process.env.MONGO_URI)
 app.use(express.json());
 app.use('/api/v1', routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Week 1 Setup' });
-});
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

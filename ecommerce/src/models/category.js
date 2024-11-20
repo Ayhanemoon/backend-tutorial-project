@@ -10,7 +10,14 @@ const categorySchema = new mongoose.Schema({
     ref: 'Category',
     default: null
   },
-  description: String
+  description: String,
+  attributes:[{
+    required:Boolean,
+    attribute:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Attribute'
+    }
+  }]
 },  
 {
   timestamps: true

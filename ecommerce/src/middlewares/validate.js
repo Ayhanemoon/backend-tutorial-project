@@ -1,4 +1,3 @@
-/* eslint-disable no-magic-numbers */
 const Joi = require('joi');
 
 const registerSchema = Joi.object({
@@ -8,9 +7,7 @@ const registerSchema = Joi.object({
 });
 
 exports.validateRegistration = (req, res, next)=>{
-  const {error} = registerSchema.validate(req.body);
-  if (error) {
-    return res.status(400).json({message: error.details[0].message});
-  }
+  const {orderLines} = req.body;
+    
   return next();
 };

@@ -15,16 +15,16 @@ const productSchema = new mongoose.Schema({
     ref: 'Category',
     required: true
   },
-  extraAttributes:{
-    type: mongoose.Schema.Types.Mixed
-  },
-  createdAt:{
-    type:Date, default:Date.now
-  },
-  updatedAt:{
-    type:Date,
-    default: Date.now
-  }
+  attributes:[{
+    required:Boolean,
+    attribute:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'Attribute'
+    }
+  }]
+}, 
+{
+  timestamps: true
 });
 
 module.exports = mongoose.model('Product', productSchema);

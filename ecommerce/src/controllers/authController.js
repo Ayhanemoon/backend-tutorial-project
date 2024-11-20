@@ -1,7 +1,7 @@
 /* eslint-disable no-magic-numbers */
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const userController = require('../controllers/userController');
+const userController = require('./userController');
 const User = require('../models/user');
 
 const JWT_SECRET = process.env.JWT_SECRET;
