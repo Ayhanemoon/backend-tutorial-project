@@ -1,18 +1,22 @@
 const mongoose = require('mongoose');
 
-const categorySchema = new mongoose.Schema({
-  name: {
+const productSchema = new mongoose.Schema({
+  name:{
     type: String,
     required: true,
     unique: true
   },
-  parent: {
-    parentId:{
+  price:{
+    type: Number,
+    required: true
+  },
+  category: {
+    categoryId:{
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Category',
       default: null
     },
-    parentName : String
+    categoryName : String
   },
   attributes:[
     {
@@ -39,4 +43,4 @@ const categorySchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Category', categorySchema);
+module.exports = mongoose.model('Product', productSchema);

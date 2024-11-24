@@ -18,10 +18,12 @@ exports.categoryIdValidation = check('categoryId')
     return true;
   });
 
+//checkunique name for category
 exports.categoryNameValidation = check('name')
   .notEmpty()
   .withMessage('Enter a name for category.')
-  .bail();
+  .bail()
+  .customSanitizer(name => name.toLowerCase());
 
 exports.categoryParentValidation = check('parent.parentId')
   .optional()
@@ -42,6 +44,9 @@ exports.categoryParentValidation = check('parent.parentId')
 
 exports.categoryAttributesValidation = check('attributes') // uniq attribute ids...
   .optional()
+  .isArray()
+  .withMessage('Atrributes must be an array.')
+  .bail()
   .custom(attributes => attributes.every(async (attr) => await attributeValidation(attr.attributeId, attr.attributeName, attr.attributeValues)))
   .customSanitizer(attributes => attributes.map(attr => ({
     required: attr.required ?? false,
