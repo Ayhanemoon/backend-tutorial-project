@@ -19,14 +19,15 @@ exports.productIdValidation = check('productId')
 
 exports.productNameValidation = check('name')
   .notEmpty()
-  .withMessage('Enter a name for product.')
+  .withMessage('A name for product is required.')
   .bail()
   .customSanitizer(name => name.toLowerCase());
 
 exports.productPriceValidation = check('price')
   .notEmpty()
+  .withMessage('A price for product required.')
   .isNumeric()
-  .withMessage('Enter a price for product.')
+  .withMessage('Price should be numeric.')
   .bail();
 
 exports.productCategoryValidation = check('category')
@@ -54,7 +55,7 @@ exports.productAttributesValidation = check('attributes') // uniq attribute ids.
   .isArray()
   .withMessage('Atrributes must be an array.')
   .bail()
-  .custom(attributes => attributes.every(async (attr) => await attributeValidation(attr.attributeId, attr.attributeName, attr.attributeValues)))
+  .custom(async (attributes) => attributes.every(async (attr) => await attributeValidation(attr.attributeId, attr.attributeName, attr.attributeValues)))
   .customSanitizer(attributes => attributes.map(attr => ({
     required: attr.required ?? false,
     attributeId: mongoose.Types.ObjectId.createFromHexString(attr.attributeId),

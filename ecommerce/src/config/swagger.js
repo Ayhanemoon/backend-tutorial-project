@@ -1,5 +1,4 @@
 const swaggerAutogen = require('swagger-autogen')();
-const { glob } = require('glob');
 
 const doc = {
   info: {
@@ -10,4 +9,4 @@ const doc = {
   schemes: ['http']
 };
 
-glob('**/routes/index.js', {absolute: true}).then(files => swaggerAutogen('./swagger-output.json', files, doc));
+swaggerAutogen('./swagger-output.json', ['../index.js'], doc);

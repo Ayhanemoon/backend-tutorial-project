@@ -54,7 +54,7 @@ exports.deleteCategory = async(req, res) => {
   }
 };
 
-exports.updateAttributes = async(req, res) => {
+exports.updateAttributes = async(req, res) => {//TODO add product variants for products
   try {
     const {attributes} = req.body;
     const category = await Category.findById(req.params.categoryId);

@@ -1,40 +1,12 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const mongoose = require('mongoose');
-const routes = require('./routes/index');
-const swaggerJsDoc = require('swagger-jsdoc');
-const swaggerUi = require('swagger-ui-express');
+const router = require('express').Router();
 
-dotenv.config({path:`${__dirname}/.env`});
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: '3.0.0',
-    servers:[
-      {
-        url: 'http://localhost:3000/'
-      }
-    ],
-    info: {
-      title: 'User API',
-      version: '1.0.0',
-      description: 'API for managing users'
-    }
-  },
-  apis: [`${__dirname}\\config\\*.js`]
-};
+const salesRoutes = require('./sales/routes/index');
+const accountingRoutes = require('./accounting/routes/index');
+const productRoutes = require('./product/routes/index');
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-const app = express();
+//const versionAddress = process.env.ApiVersionAddress + ''; ???
+router.use('/api/v1', salesRoutes);
+router.use('/api/v1', accountingRoutes);
+router.use('/api/v1', productRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
-  .then(()=> console.log('Connected to MongoDB'))
-  .catch(err=>console.error('Could not connect to MongoDB', err));
-
-app.use(express.json());
-app.use('/api/v1', routes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-const PORT = process.env.PORT;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+module.exports = router;
