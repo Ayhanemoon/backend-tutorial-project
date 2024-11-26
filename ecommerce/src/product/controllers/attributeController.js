@@ -23,9 +23,9 @@ exports.getAllAttributes = async(req, res)=>{
 exports.getAttributeById = async(req, res)=>{
   try {
     const productAttribute = await ProductAttribute.findById(req.params.attributeId, '-__v -_id -updatedAt');
-    if (!productAttribute) {
-      return res.status(404).json({message:'Attribute not found'});
-    }
+    // if (!productAttribute) {
+    //   return res.status(404).json({message:'Attribute not found'});
+    // }
     return res.status(200).json(productAttribute ?? {});
   } catch (error) {
     return res.status(500).json({mssage: 'Error retreiving attribute', error});
@@ -39,9 +39,9 @@ exports.updateAttribute = async(req, res)=>{
       req.params.attributeId,
       { name, values},
       { projection:'-__v -_id -updatedAt', new:true, runValidators:true});
-    if (!productAttribute) {
-      return res.status(404).json({message:'Attribute not found'});
-    }
+    // if (!productAttribute) {
+    //   return res.status(404).json({message:'Attribute not found'});
+    // }
     return res.status(200).json({message:'Attribute updated successfully', productAttribute});
   } catch (error) {
     return res.status(500).json({message: 'Error updating attribute', error});
@@ -50,10 +50,10 @@ exports.updateAttribute = async(req, res)=>{
 
 exports.deleteAttribute = async(req, res) => {
   try {
-    const productAttribute = await ProductAttribute.findByIdAndDelete(req.params.attributeId);
-    if (!productAttribute) {
-      return res.status(404).json({message:'Attribute not found'});
-    }
+    await ProductAttribute.findByIdAndDelete(req.params.attributeId);
+    // if (!productAttribute) {
+    //   return res.status(404).json({message:'Attribute not found'});
+    // }
     return res.status(204).json({message:'Attribute deleted successfully'});
   } catch (error) {
     return res.status(500).json({message: 'Error deleting product', error});

@@ -7,11 +7,11 @@ const mongoose = require('mongoose');
 exports.salesOrderIdValidation = check('salesOrderId').notEmpty()
   .withMessage('Sales order id in required.')
   .bail()
-  .custome(salesOrderId => mongoose.isValidObjectId(salesOrderId))
+  .custom(salesOrderId => mongoose.isValidObjectId(salesOrderId))
   .withMessage('Sales order id must be an object id.')
   .bail()
   .customSanitizer(salesOrderId => new mongoose.Types.ObjectId.cacheHexString(salesOrderId))
-  .custome(async (salesOrderId) => {
+  .custom(async (salesOrderId) => {
     const salesOrder = await SalesOrder.findById(salesOrderId);
     if (!salesOrder) {
       throw new Error(`Sales order with id '${salesOrderId}' does not exists.`);
@@ -19,8 +19,12 @@ exports.salesOrderIdValidation = check('salesOrderId').notEmpty()
     return true;
   });
 
-exports.customerValidation = async(req) => await customerValidation(req.customer.customerId, req.customer.customerName,
-  req.customer.customerInvoiceAddress, req.customer.customerDeliveryAddress);
+exports.customerValidation = check('customer')
+  .notEmpty()
+  .withMessage('Customer info is required.')
+  .bail()
+  .custom(async(customer) => await customerValidation(customer.customerId, customer.customerName,
+    customer.customerInvoiceAddress, customer.customerDeliveryAddress));
 
 exports.orderLineItemsValidation = check('orderLineItems') //unique order line item
   .isArray()
