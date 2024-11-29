@@ -28,7 +28,7 @@ export default [
       'no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
       'no-multiple-empty-lines': ['error', { 'max': 1 }],
       'arrow-body-style': ['error', 'as-needed'],
-      'no-magic-numbers': ['warn', {ignore: [200, 201, 204, 400, 404, 500, 0], 'ignoreArrayIndexes': true, 'enforceConst': true }],
+      'no-magic-numbers': ['warn', {ignore: [200, 201, 204, 400, 401, 404, 500, 0], 'ignoreArrayIndexes': true, 'enforceConst': true }],
       'no-param-reassign': ['error', { 'props': false }],
       'no-shadow': ['error'],
       'camelcase': ['error', { 'properties': 'never' }],
