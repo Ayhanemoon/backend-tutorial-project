@@ -3,14 +3,12 @@ dotenv.config({path:`${__dirname}/.env`});
 
 const express = require('express');
 const routes = require('./index');
-const swaggerUi = require('swagger-ui-express');
-const swaggerDocument = require('./config/swagger-output.json');
+
 require('./config/mongo');
 
 const app = express();
 app.use(express.json());
-app.use(routes);
-app.use(process.env.ApiVersionAddress + '/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/', routes);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
