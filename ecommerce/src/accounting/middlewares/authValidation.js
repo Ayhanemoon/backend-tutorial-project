@@ -48,9 +48,10 @@ exports.authenticateJWT = check('Authorization')
   .withMessage('Access Denied. No token provided.')
   .custom((token, req) => {
     try {
-      req.local.customer = jwt.verify(token, process.env.JWT_SECRET);
+      const tempToken = token.slice('Beare '.length());
+      req.customer = jwt.verify(tempToken, process.env.JWT_SECRET);
       return true;
     } catch (err) {
-      throw new Error({message:'Access Denied. Invalid token.', err});
+      throw new Error({message:'Access Denied. Invalid token.', err});//return 40?
     }
   });
