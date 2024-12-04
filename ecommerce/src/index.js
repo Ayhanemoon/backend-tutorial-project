@@ -6,6 +6,7 @@ const categoryRoutes = require('./product/routes/categories');
 const attributeRoutes = require('./product/routes/attributes');
 const productRoutes = require('./product/routes/products');
 const productVariantRoutes = require('./product/routes/productVariants');
+const settingRoutes = require('./setting/routes/settings');
 const {authenticateJWT} = require('./accounting/middlewares/authValidation');
 const {checkValidationPassed} = require('./middlewares/chackValidationPassed');
 
@@ -15,7 +16,7 @@ const swaggerDocument = require('./config/swagger-output.json');
 
 /**
  * @swagger
- * /api/v1/categories:
+ * /api/v1:
  *   get:
  *     description: A secured route
  *     security:
@@ -31,5 +32,6 @@ router.use('/api/v1/categories', authenticateJWT, checkValidationPassed, categor
 router.use('/api/v1/attributes', authenticateJWT, checkValidationPassed, attributeRoutes);
 router.use('/api/v1/products', authenticateJWT, checkValidationPassed, productRoutes);
 router.use('/api/v1/product-variants', authenticateJWT, checkValidationPassed, productVariantRoutes);
+router.use('/api/v1/settings', authenticateJWT, checkValidationPassed, settingRoutes);
 
 module.exports = router;
