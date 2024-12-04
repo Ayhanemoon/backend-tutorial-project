@@ -42,15 +42,15 @@ exports.orderLineItemsValidation = check('orderLineItems') //unique order line i
   })
   ));
 
-exports.totalAmountValidation = check('totalAmount').notEmpty()
+exports.totalPriceValidation = check('totalPrice').notEmpty()
   .withMessage('Total amount is required.')
   .bail()
   .isNumeric()
   .withMessage('Total amount should be numeric.')
   .bail()
-  .custom((totalAmount, {req}) => { //include tax ...
-    if (req.body.orderLineItems.reduce((result, lineItem) => result + lineItem.subTotal, 0) !== totalAmount) {
-      throw new Error('Sum of prices of order line items is not equal with totalAmount');
+  .custom((totalPrice, {req}) => { //include tax ...
+    if (req.body.orderLineItems.reduce((result, lineItem) => result + lineItem.subTotal, 0) !== totalPrice) {
+      throw new Error('Sum of prices of order line items is not equal with totalPrice');
     }
     return true;
   });

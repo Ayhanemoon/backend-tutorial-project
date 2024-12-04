@@ -1,10 +1,13 @@
 const SalesOrder = require('../models/salesOrder');
+const {invoiceEventEmitter} = require('../../setting/controllers/invoiceEventController');
+const {invoiceEventEnum} = require('../../setting/controllers/invoiceEventEnum');
 
 exports.createSalesOrder = async(req, res) => {
   try {
-    const { customer, orderLineItems, totalAmount, status} = req.body;
-    const salesOrder = new SalesOrder({customer, orderLineItems, totalAmount, status});
+    const { customer, orderLineItems, totalPrice, status} = req.body;
+    const salesOrder = new SalesOrder({customer, orderLineItems, totalPrice, status});
     const savedSalesOrder = await salesOrder.save();
+    invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
     res.status(201).json(savedSalesOrder);
   } catch (error) {
     res.status(500).json({message:'Error creating sales order.', error});
@@ -34,14 +37,17 @@ exports.getSalesOrderById = async(req, res) => {
 
 exports.updateSalesOrder = async(req, res) => {
   try {
-    const { customer, orderLineItems, totalAmount, status} = req.body;
+    const { customer, orderLineItems, totalPrice, status} = req.body;
     const salesOrder = await SalesOrder.findByIdAndUpdate(req.params.salesOrderId,
-      {customer, orderLineItems, totalAmount, status},
-      {projection:'-__v -_id', new:true, runValidators:true});
+      {customer, orderLineItems, totalPrice, status},
+      {projection:'-__v -_id', new:false, runValidators:true});
     // if (!salesOrder) {
     //   res.status(404).json('Sales order not found.');
     // }
-    res.status(200).json(salesOrder);
+    if (salesOrder.status !== status) {
+      invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
+    }
+    res.status(200).send();
   } catch (error) {
     res.status(500).json({message:'Error updating sales order.', error});
   }

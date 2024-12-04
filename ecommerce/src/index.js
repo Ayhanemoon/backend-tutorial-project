@@ -7,6 +7,8 @@ const attributeRoutes = require('./product/routes/attributes');
 const productRoutes = require('./product/routes/products');
 const productVariantRoutes = require('./product/routes/productVariants');
 const settingRoutes = require('./setting/routes/settings');
+const invoiceRoutes = require('./sales/routes/invoices');
+
 const {authenticateJWT} = require('./accounting/middlewares/authValidation');
 const {checkValidationPassed} = require('./middlewares/chackValidationPassed');
 
@@ -33,5 +35,6 @@ router.use('/api/v1/attributes', authenticateJWT, checkValidationPassed, attribu
 router.use('/api/v1/products', authenticateJWT, checkValidationPassed, productRoutes);
 router.use('/api/v1/product-variants', authenticateJWT, checkValidationPassed, productVariantRoutes);
 router.use('/api/v1/settings', authenticateJWT, checkValidationPassed, settingRoutes);
+router.use('/api/v1/invoices', authenticateJWT, checkValidationPassed, invoiceRoutes);
 
 module.exports = router;

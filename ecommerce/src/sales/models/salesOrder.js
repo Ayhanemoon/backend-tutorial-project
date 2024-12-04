@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const orderLineItem = require('./orderLineItem');
+const SalesOrderStatusEnum = require('./salesOrderStatusEnum');
 
 const saleOrderSchema = new mongoose.Schema({
   customer:{
@@ -9,15 +10,15 @@ const saleOrderSchema = new mongoose.Schema({
     customerDeliveryAddress:{type: String, required: true}
   },
   orderLineItems: [orderLineItem],
-  totalAmount:{
+  totalPrice:{
     type: Number,
     required: true,
     min: 0
   },
   status:{
     type: String,
-    enum:['toInvoice', 'nothingToInvoice', 'fullyInvoiced', 'cancelled'],
-    default: 'toInvoice'
+    enum: SalesOrderStatusEnum.values(),
+    default: SalesOrderStatusEnum.DRAFT
   }
   // quotationId:{
   //   type: mongoose.Schema.Types.ObjectId,
@@ -27,4 +28,4 @@ const saleOrderSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('SaleOrder', saleOrderSchema);
+module.exports = mongoose.model('SalesOrder', saleOrderSchema);
