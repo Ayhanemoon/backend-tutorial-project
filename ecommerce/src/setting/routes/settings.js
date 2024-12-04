@@ -5,3 +5,5 @@ const {getSetting, updateSetting} = require('../controllers/settingController');
 router.get('/', getSetting);
 
 router.put('/', updateSetting);
+
+module.exports = router;

@@ -40,4 +40,4 @@ const doc = {
   definitions: {},
   security: [{ BearerAuth: [] }]
 };
-swaggerAutogen('./swagger-output.json', ['../index.js', '../product/routes/categories.js'], doc);
+swaggerAutogen('./swagger-output.json', ['../index.js'], doc);
