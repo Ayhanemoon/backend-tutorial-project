@@ -19,7 +19,6 @@ const swaggerDocument = require('./config/swagger-output.json');
 /**
  * @swagger
  * /api/v1:
- *   get:
  *     description: A secured route
  *     security:
  *       - BearerAuth: []
@@ -27,6 +26,7 @@ const swaggerDocument = require('./config/swagger-output.json');
  *       200:
  *         description: Successful response
  */
+
 router.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 router.use('/api/v1/sales-order', authenticateJWT, checkValidationPassed, salesOrderRoutes);
 router.use('/api/v1/auth', authRoutes);

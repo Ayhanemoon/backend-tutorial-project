@@ -19,6 +19,7 @@ exports.createInvoice = async (salesOrder) => {
   }};
 
 exports.getAllInvoices = async(req, res) => {
+  // #swagger.tags = ['Invoice']
   try {
     const invoices = await Invoice.find({},'-__v');
     return res.status(200).json(invoices ?? {});
@@ -28,6 +29,7 @@ exports.getAllInvoices = async(req, res) => {
 };
 
 exports.getInvoiceById = async(req, res) => {
+  // #swagger.tags = ['Invoice']
   try {
     const invoice = await Invoice.findById(req.params.invoiceId);
     // if (!salesOrder) {

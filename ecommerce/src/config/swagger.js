@@ -38,6 +38,40 @@ const doc = {
     }
   },
   definitions: {},
-  security: [{ BearerAuth: [] }]
+  security: [{ BearerAuth: [] }],
+  tags: [
+    {
+      name: 'Auth',
+      description: 'Endpoints related to authorization operations'
+    },
+    {
+      name: 'Product',
+      description: 'Endpoints related to product operations'
+    },
+    {
+      name: 'Category',
+      description: 'Endpoints related to category operations'
+    },
+    {
+      name: 'Product Variant',
+      description: 'Endpoints related to product variant operations'
+    },
+    {
+      name: 'Attribute',
+      description: 'Endpoints related to attribute operations'
+    },
+    {
+      name: 'Sales Order',
+      description: 'Endpoints related to sales order operations'
+    },
+    {
+      name: 'Invoice',
+      description: 'Endpoints related to invoice operations'
+    },
+    {
+      name: 'Setting',
+      description: 'Endpoints related to setting operations'
+    }
+  ]
 };
 swaggerAutogen('./swagger-output.json', ['../index.js'], doc);

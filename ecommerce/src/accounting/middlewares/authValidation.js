@@ -48,7 +48,7 @@ exports.authenticateJWT = check('Authorization')
   .withMessage('Access Denied. No token provided.')
   .custom((token, req) => {
     try {
-      const tempToken = token.slice('Beare '.length());
+      const tempToken = token.slice('Bearer '.length);
       req.customer = jwt.verify(tempToken, process.env.JWT_SECRET);
       return true;
     } catch (err) {

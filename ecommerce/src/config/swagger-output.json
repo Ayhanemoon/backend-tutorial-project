@@ -7,6 +7,40 @@
   },
   "host": "localhost:3000",
   "basePath": "/",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Endpoints related to authorization operations"
+    },
+    {
+      "name": "Product",
+      "description": "Endpoints related to product operations"
+    },
+    {
+      "name": "Category",
+      "description": "Endpoints related to category operations"
+    },
+    {
+      "name": "Product Variant",
+      "description": "Endpoints related to product variant operations"
+    },
+    {
+      "name": "Attribute",
+      "description": "Endpoints related to attribute operations"
+    },
+    {
+      "name": "Sales Order",
+      "description": "Endpoints related to sales order operations"
+    },
+    {
+      "name": "Invoice",
+      "description": "Endpoints related to invoice operations"
+    },
+    {
+      "name": "Setting",
+      "description": "Endpoints related to setting operations"
+    }
+  ],
   "schemes": [
     "http"
   ],
@@ -21,6 +55,9 @@
   "paths": {
     "/api/v1/sales-order/": {
       "post": {
+        "tags": [
+          "Sales Order"
+        ],
         "description": "",
         "parameters": [
           {
@@ -58,6 +95,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Sales Order"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -74,6 +114,9 @@
     },
     "/api/v1/sales-order/{salesOrderId}": {
       "get": {
+        "tags": [
+          "Sales Order"
+        ],
         "description": "",
         "parameters": [
           {
@@ -96,6 +139,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Sales Order"
+        ],
         "description": "",
         "parameters": [
           {
@@ -139,6 +185,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Sales Order"
+        ],
         "description": "",
         "parameters": [
           {
@@ -163,6 +212,9 @@
     },
     "/api/v1/auth/register": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -208,6 +260,9 @@
     },
     "/api/v1/auth/login": {
       "post": {
+        "tags": [
+          "Auth"
+        ],
         "description": "",
         "parameters": [
           {
@@ -241,6 +296,9 @@
     },
     "/api/v1/categories/": {
       "post": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "parameters": [
           {
@@ -275,6 +333,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -291,6 +352,9 @@
     },
     "/api/v1/categories/{categoryId}": {
       "get": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "parameters": [
           {
@@ -313,6 +377,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "parameters": [
           {
@@ -353,6 +420,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "parameters": [
           {
@@ -377,6 +447,9 @@
     },
     "/api/v1/categories/{categoryId}/attributes": {
       "patch": {
+        "tags": [
+          "Category"
+        ],
         "description": "",
         "parameters": [
           {
@@ -413,6 +486,9 @@
     },
     "/api/v1/attributes/": {
       "post": {
+        "tags": [
+          "Attribute"
+        ],
         "description": "",
         "parameters": [
           {
@@ -444,6 +520,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Attribute"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -460,6 +539,9 @@
     },
     "/api/v1/attributes/{attributeId}": {
       "get": {
+        "tags": [
+          "Attribute"
+        ],
         "description": "",
         "parameters": [
           {
@@ -482,6 +564,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Attribute"
+        ],
         "description": "",
         "parameters": [
           {
@@ -519,6 +604,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Attribute"
+        ],
         "description": "",
         "parameters": [
           {
@@ -543,6 +631,9 @@
     },
     "/api/v1/products/": {
       "post": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "parameters": [
           {
@@ -580,6 +671,9 @@
         }
       },
       "get": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -596,6 +690,9 @@
     },
     "/api/v1/products/{productId}": {
       "get": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "parameters": [
           {
@@ -618,6 +715,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "parameters": [
           {
@@ -661,6 +761,9 @@
         }
       },
       "delete": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "parameters": [
           {
@@ -685,6 +788,9 @@
     },
     "/api/v1/products/{productId}/attributes": {
       "patch": {
+        "tags": [
+          "Product"
+        ],
         "description": "",
         "parameters": [
           {
@@ -721,6 +827,9 @@
     },
     "/api/v1/product-variants/": {
       "get": {
+        "tags": [
+          "Product Variant"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -737,6 +846,9 @@
     },
     "/api/v1/product-variants/{productVariantId}": {
       "patch": {
+        "tags": [
+          "Product Variant"
+        ],
         "description": "",
         "parameters": [
           {
@@ -779,6 +891,9 @@
     },
     "/api/v1/settings/": {
       "get": {
+        "tags": [
+          "Setting"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -790,6 +905,9 @@
         }
       },
       "put": {
+        "tags": [
+          "Setting"
+        ],
         "description": "",
         "parameters": [
           {
@@ -817,6 +935,9 @@
     },
     "/api/v1/invoices/": {
       "get": {
+        "tags": [
+          "Invoice"
+        ],
         "description": "",
         "responses": {
           "200": {
@@ -833,6 +954,9 @@
     },
     "/api/v1/invoices/{invoiceId}": {
       "get": {
+        "tags": [
+          "Invoice"
+        ],
         "description": "",
         "parameters": [
           {

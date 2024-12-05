@@ -3,6 +3,7 @@ const {invoiceEventEmitter} = require('../../setting/controllers/invoiceEventCon
 const {invoiceEventEnum} = require('../../setting/controllers/invoiceEventEnum');
 
 exports.createSalesOrder = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
   try {
     const { customer, orderLineItems, totalPrice, status} = req.body;
     const salesOrder = new SalesOrder({customer, orderLineItems, totalPrice, status});
@@ -15,6 +16,7 @@ exports.createSalesOrder = async(req, res) => {
 };
 
 exports.getAllSalesOrders = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
   try {
     const salesOrders = await SalesOrder.find({},'-__v');
     return res.status(200).json(salesOrders ?? {});
@@ -24,6 +26,7 @@ exports.getAllSalesOrders = async(req, res) => {
 };
 
 exports.getSalesOrderById = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
   try {
     const salesOrder = await SalesOrder.findById(req.params.salesOrderId);
     // if (!salesOrder) {
@@ -36,6 +39,7 @@ exports.getSalesOrderById = async(req, res) => {
 };
 
 exports.updateSalesOrder = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
   try {
     const { customer, orderLineItems, totalPrice, status} = req.body;
     const salesOrder = await SalesOrder.findByIdAndUpdate(req.params.salesOrderId,
@@ -54,6 +58,7 @@ exports.updateSalesOrder = async(req, res) => {
 };
 
 exports.deleteSalesOrder = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
   try {
     await SalesOrder.findByIdAndDelete(req.params.salesOrderId);
     // if (!salesOrder) {

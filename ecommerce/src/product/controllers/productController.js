@@ -2,6 +2,7 @@ const Product = require('../models/product');
 const {createProductVariantsByProduct, deleteProductVariantsByProductId} = require('../controllers/productVariantController');
 
 exports.createProduct = async(req, res) => {
+  // #swagger.tags = ['Product']
   try {
     const { name, price, category, attributes } = req.body;
     const product = new Product({name, price, category, attributes});
@@ -14,6 +15,7 @@ exports.createProduct = async(req, res) => {
 };
 
 exports.getAllProducts = async(req, res)=>{
+  // #swagger.tags = ['Product']
   try {
     const products = await Product.find({}, '-__v');
     return res.status(200).json(products ?? {});
@@ -23,6 +25,7 @@ exports.getAllProducts = async(req, res)=>{
 };
 
 exports.getProductById = async(req, res)=>{
+  // #swagger.tags = ['Product']
   try {
     const product = await Product.findById(req.params.productId, '-__v -_id');
     // if (!product) {
@@ -35,6 +38,7 @@ exports.getProductById = async(req, res)=>{
 };
 
 exports.updateProduct = async(req, res)=>{
+  // #swagger.tags = ['Product']
   try {
     const { name, price, category, attributes} = req.body;
     const product = await Product.findByIdAndUpdate(
@@ -52,6 +56,7 @@ exports.updateProduct = async(req, res)=>{
 };
 
 exports.deleteProduct = async(req, res) => {
+  // #swagger.tags = ['Product']
   try {
     const product = await Product.findByIdAndDelete(req.params.productId);
     // if (!product) {
@@ -66,6 +71,7 @@ exports.deleteProduct = async(req, res) => {
 
 exports.updateAttributes = async(req, res) => {//add action
   try {
+    // #swagger.tags = ['Product']
     const {attributes} = req.body;
     const product = await Product.findById(req.params.productId);
     product.attributes = attributes;

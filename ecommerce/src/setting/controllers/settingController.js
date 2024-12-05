@@ -2,11 +2,13 @@ const Settings = require('../models/setting');
 const invoiceEventEmitter = require('./invoiceEventController');
 
 exports.getSetting =  async (req, res) => {
+  // #swagger.tags = ['Setting']
   const settings = await Settings.findOne();
   res.json(settings);
 };
 
 exports.updateSetting = async (req, res) => {
+  // #swagger.tags = ['Setting']
   try {
     const {invoice} = req.body;
     let setting = await Settings.findOne();

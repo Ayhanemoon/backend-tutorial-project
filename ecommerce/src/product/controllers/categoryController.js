@@ -1,6 +1,7 @@
 const Category = require('../models/category');
 
 exports.createCategory = async(req, res) => {
+  // #swagger.tags = ['Category']
   try {
     const {name, parent, attributes} = req.body;
     let category = new Category({name, parent, attributes});
@@ -15,6 +16,7 @@ exports.createCategory = async(req, res) => {
 };
 
 exports.getAllCategories = async(req, res) => {
+  // #swagger.tags = ['Category']
   try {
     const categories = await Category.find({}, '-__v -updatedAt');
     return res.status(200).json(categories ?? {});
@@ -24,6 +26,7 @@ exports.getAllCategories = async(req, res) => {
 };
 
 exports.getCategoryById = async(req, res) => {
+  // #swagger.tags = ['Category']
   try {
     const category = await Category.findById(req.params.categoryId, '-__v -_id -updatedAt');
     return res.status(200).json(category);
@@ -33,6 +36,7 @@ exports.getCategoryById = async(req, res) => {
 };
 
 exports.updateCategory = async(req, res) => {
+  // #swagger.tags = ['Category']
   try {
     const {name, parent, attributes} = req.body;
     const category = await Category.findByIdAndUpdate(
@@ -46,6 +50,7 @@ exports.updateCategory = async(req, res) => {
 };
 
 exports.deleteCategory = async(req, res) => {
+  // #swagger.tags = ['Category']
   try {
     await Category.findByIdAndDelete(req.params.categoryId);
     return res.status(204).send();
@@ -55,6 +60,7 @@ exports.deleteCategory = async(req, res) => {
 };
 
 exports.updateAttributes = async(req, res) => {//TODO add product variants for products
+  // #swagger.tags = ['Category']
   try {
     const {attributes} = req.body;
     const category = await Category.findById(req.params.categoryId);

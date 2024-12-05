@@ -1,6 +1,7 @@
 const ProductVariant = require('../models/productVariant');
 
 exports.getAllProductVariants = async(req, res)=>{
+  // #swagger.tags = ['Product Variant']
   try {
     const productVariants = await ProductVariant.find({}, '-__v -updatedAt');
     return res.status(200).json(productVariants ?? {});
@@ -10,6 +11,7 @@ exports.getAllProductVariants = async(req, res)=>{
 };
 
 exports.partiallyUpdateProductVariant = async(req, res) => {
+  // #swagger.tags = ['Product Variant']
   try {
     const {sku, stock, price} = req.body;
     const productVariant = await ProductVariant.findById(req.params.productVariantId);
@@ -24,6 +26,7 @@ exports.partiallyUpdateProductVariant = async(req, res) => {
 };
 
 exports.createProductVariantsByProduct = async (product) => {
+  // #swagger.tags = ['Product Variant']
   if (product.attributes) {
     await createProductVariants(product._id, product.name, product.attributes);
   }
@@ -33,6 +36,7 @@ exports.createProductVariantsByProduct = async (product) => {
 };
 
 exports.deleteProductVariantsByProductId = async (productId) => {
+  // #swagger.tags = ['Product Variant']
   await ProductVariant.deleteMany({productId});
 };
 

@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
+  // #swagger.tags = ['Auth']
   try {
     const { username, password, email, phone, invoiceAddress, deliveryAddress} = req.body;
     const hashedPassword = await bcrypt.hash(password, Number(process.env.SaltLength));
@@ -17,6 +18,7 @@ exports.register = async (req, res) => {
 };
 
 exports.login = async (req, res) => {
+  // #swagger.tags = ['Auth']
   try {
     const { username, password } = req.body;
     const customer = await Customer.findOne({username});
