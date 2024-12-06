@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const address = require('./address');
+//const address = require('./address');
 
 const CustomerSchema = new mongoose.Schema({
   username: {
@@ -20,10 +20,10 @@ const CustomerSchema = new mongoose.Schema({
     type: String
   },
   invoiceAddress: {
-    address
+    type: String
   },
   deliveryAddress: {
-    address
+    type: String
   }
   //,
   // balance: {

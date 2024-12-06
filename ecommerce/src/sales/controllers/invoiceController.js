@@ -2,6 +2,10 @@ const Invoice = require('../models/invoice');
 
 exports.createInvoice = async (salesOrder) => {
   try {
+    const savedInvoice = await Invoice.findOne({orderId:salesOrder._id});
+    if (savedInvoice) {
+      return;
+    }
     const invoice = new Invoice({
       customer: {
         customerId: salesOrder.customer.customerId,
@@ -12,7 +16,6 @@ exports.createInvoice = async (salesOrder) => {
       totalPrice: salesOrder.totalPrice
     });
     await invoice.save();
-    console.log('Invoice created:', invoice);
     return invoice;
   } catch (error)  {
     throw new Error('Error creating invoice.', error);

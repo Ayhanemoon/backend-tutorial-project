@@ -1,6 +1,7 @@
 const SalesOrder = require('../models/salesOrder');
 const {orderLineItemValidation} = require('../middlewares/orderLineItemValidation');
 const {customerValidation} = require('../../accounting/middlewares/customerValidation');
+const SalesOrderStatusEnum = require('../models/salesOrderStatusEnum');
 const {check} = require('express-validator');
 const mongoose = require('mongoose');
 
@@ -10,7 +11,7 @@ exports.salesOrderIdValidation = check('salesOrderId').notEmpty()
   .custom(salesOrderId => mongoose.isValidObjectId(salesOrderId))
   .withMessage('Sales order id must be an object id.')
   .bail()
-  .customSanitizer(salesOrderId => new mongoose.Types.ObjectId.cacheHexString(salesOrderId))
+  .customSanitizer(salesOrderId =>  mongoose.Types.ObjectId.createFromHexString(salesOrderId))
   .custom(async (salesOrderId) => {
     const salesOrder = await SalesOrder.findById(salesOrderId);
     if (!salesOrder) {
@@ -42,6 +43,15 @@ exports.orderLineItemsValidation = check('orderLineItems') //unique order line i
   })
   ));
 
+exports.salesOrderStateValidation = check('status')
+  .custom((status)=> {
+    const statusValues = SalesOrderStatusEnum.values();
+    if (!statusValues.includes(status)) {
+      throw new Error('State is not valid');
+    }
+    return true;
+  });
+
 exports.totalPriceValidation = check('totalPrice').notEmpty()
   .withMessage('Total amount is required.')
   .bail()
@@ -49,7 +59,8 @@ exports.totalPriceValidation = check('totalPrice').notEmpty()
   .withMessage('Total amount should be numeric.')
   .bail()
   .custom((totalPrice, {req}) => { //include tax ...
-    if (req.body.orderLineItems.reduce((result, lineItem) => result + lineItem.subTotal, 0) !== totalPrice) {
+    const tempTotalPrice = req.body.orderLineItems.reduce((result, lineItem) => result + lineItem.subtotal, 0);
+    if (tempTotalPrice !== totalPrice) {
       throw new Error('Sum of prices of order line items is not equal with totalPrice');
     }
     return true;

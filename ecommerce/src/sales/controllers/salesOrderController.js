@@ -1,6 +1,6 @@
 const SalesOrder = require('../models/salesOrder');
 const {invoiceEventEmitter} = require('../../setting/controllers/invoiceEventController');
-const {invoiceEventEnum} = require('../../setting/controllers/invoiceEventEnum');
+const invoiceEventEnum = require('../../setting/controllers/invoiceEventEnum');
 
 exports.createSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
@@ -65,6 +65,22 @@ exports.deleteSalesOrder = async(req, res) => {
     //   res.status(404).json('Sales order not found.');
     // }
     return res.status(204).json({message:'Sales order deleted successfully'});
+  } catch (error) {
+    res.status(500).json({message:'Error deleting sales order.', error});
+  }
+};
+
+exports.partiallyUpdateSalesOrder = async(req, res) => {
+  // #swagger.tags = ['Sales Order']
+  try {
+    const salesOrder = await SalesOrder.findById(req.params.salesOrderId);
+    // if (!salesOrder) {
+    //   res.status(404).json('Sales order not found.');
+    // }
+    salesOrder.status = req.body.status;
+    await salesOrder.save();
+    invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
+    return res.status(201).send();
   } catch (error) {
     res.status(500).json({message:'Error deleting sales order.', error});
   }

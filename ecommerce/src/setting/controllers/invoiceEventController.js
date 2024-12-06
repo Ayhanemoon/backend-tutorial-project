@@ -2,13 +2,13 @@ const EventEmitter = require('events');
 const invoiceEventEmitter = new EventEmitter();
 const InvoicePolicyEnum = require('../models/invoicePolicyEnum');
 const {createInvoice} = require('../../sales/controllers/invoiceController');
-const {invoiceEventEnum} = require('./invoiceEventEnum');
+const invoiceEventEnum = require('./invoiceEventEnum');
 
-exports.updateInvoiceEvent = async(invoiceSetting) => {
-  updateSalesOrderStatusEvent(invoiceSetting);
+function reloadInvoiceEvent(invoiceSetting) {
+  reloadSalesOrderStatusEvent(invoiceSetting);
 };
 
-function updateSalesOrderStatusEvent(invoiceSetting) {
+function reloadSalesOrderStatusEvent(invoiceSetting) {
   const eventName = invoiceEventEnum.SALES_ORDER_STATUS_CHANGED;
 
   invoiceEventEmitter.removeAllListeners(eventName);
@@ -37,4 +37,4 @@ function updateSalesOrderStatusEvent(invoiceSetting) {
   }
 };
 
-module.exports = invoiceEventEmitter;
+module.exports = {invoiceEventEmitter, reloadInvoiceEvent};

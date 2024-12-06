@@ -19,8 +19,20 @@ exports.updateSetting = async (req, res) => {
     setting.invoice = invoice;
     await setting.save();
     //if invoice changed
-    invoiceEventEmitter.update(setting.invoice);
+    invoiceEventEmitter.reloadInvoiceEvent(setting.invoice);
     res.json({ message: 'Settings updated', setting });
+  } catch (error) {
+    throw new Error('Error updating setting', error);
+  }
+};
+
+exports.reloadInvoiceEvent = async() => {
+  try {
+    let setting = await Settings.findOne();
+    if (!setting) {
+      setting = new Settings();
+    }
+    invoiceEventEmitter.reloadInvoiceEvent(setting.invoice);
   } catch (error) {
     throw new Error('Error updating setting', error);
   }

@@ -6,8 +6,8 @@ const saleOrderSchema = new mongoose.Schema({
   customer:{
     customerId :{type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true},
     customerName:{type: String, required: true},
-    customerInvoiceAddress:{type: String, required: true},
-    customerDeliveryAddress:{type: String, required: true}
+    customerInvoiceAddress:{type: String, required: false},
+    customerDeliveryAddress:{type: String, required: false}
   },
   orderLineItems: [orderLineItem],
   totalPrice:{

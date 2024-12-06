@@ -27,12 +27,14 @@ exports.partiallyUpdateProductVariant = async(req, res) => {
 
 exports.createProductVariantsByProduct = async (product) => {
   // #swagger.tags = ['Product Variant']
-  if (product.attributes) {
-    await createProductVariants(product._id, product.name, product.attributes);
+  const standardArray = [...product.attributes];
+  if (standardArray) {
+    await createProductVariants(product._id, product.name, product.price, product.attributes);
   }
-  if (product.category.attributes) {
-    await createProductVariants(product._id, product.name, product.category.attributes);
-  }
+  // const attributes = (await Category.findById(product.category.categoryId)).attributes;
+  // if (attributes) {
+  //   await createProductVariants(product._id, product.name, attributes);
+  // }
 };
 
 exports.deleteProductVariantsByProductId = async (productId) => {
@@ -40,7 +42,7 @@ exports.deleteProductVariantsByProductId = async (productId) => {
   await ProductVariant.deleteMany({productId});
 };
 
-async function createProductVariants (productId, productName, attributes) {
+async function createProductVariants (productId, productName, productPrice, attributes) {
   attributes.map(attr =>
     attr.attributeValues.map(async val => {
       const savedProductVariant = await ProductVariant.findOne({
@@ -58,7 +60,9 @@ async function createProductVariants (productId, productName, attributes) {
             attributeId: attr.attributeId,
             attributeName: attr.attributeName,
             attributeValue: val
-          }});
+          },
+          price: productPrice
+        });
         await productVariant.save();
       }
     })
