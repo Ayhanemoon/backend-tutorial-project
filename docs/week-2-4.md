@@ -403,3 +403,119 @@ paths:
 Use **Postman** or **cURL** to test each route:
 1. **User CRUD**: POST `/users`, GET `/users`, GET `/users/:id`, PUT `/users/:id`, DELETE `/users/:id`.
 2. **Auth**: POST `/auth/register`, POST `/auth/login`.
+
+
+
+---
+---
+
+```
+# CleanUp Your Application's Structure
+```
+
+---
+---
+
+
+### **Updated Application Structure with Swagger Documentation**
+
+```
+app/
+├── src/
+│   ├── config/           
+│   │   ├── database.js        # Database connection setup
+│   │   ├── swagger.js         # Swagger configuration file
+│   ├── controllers/      
+│   │   ├── authController.js  # Handles login and registration
+│   │   └── userController.js  # Handles user CRUD operations
+│   ├── middlewares/           # Joi validation, authentication
+│   ├── models/                # Mongoose schema definitions
+│   ├── routes/           
+│   │   ├── auth.js            # Authentication routes (login, registration)
+│   │   └── users.js           # User CRUD routes (API endpoints)
+│   ├── index.js               # Main server entry point
+│   └── .env                   # Environment variables (MongoDB URI, JWT secret)
+├── node_modules/              # Installed dependencies
+└── package.json               # Project metadata and dependencies
+```
+
+### **Adding Swagger Configuration**
+
+1. **Create `swagger.js` in `config/`**:
+   - In `src/config/swagger.js`, define the Swagger configuration options.
+
+   ```javascript
+   const swaggerJsDoc = require('swagger-jsdoc');
+
+   const swaggerOptions = {
+     swaggerDefinition: {
+       openapi: '3.0.0',
+       info: {
+         title: 'User API',
+         version: '1.0.0',
+         description: 'API for managing users',
+       },
+       servers: [
+         {
+           url: '/api/v1',
+           description: 'Version 1 API'
+         }
+       ]
+     },
+     apis: ['./src/routes/*.js'], // Path to the API docs in route files
+   };
+
+   const swaggerDocs = swaggerJsDoc(swaggerOptions);
+   module.exports = swaggerDocs;
+   ```
+
+2. **Load Swagger Docs in `index.js`**:
+   - In `src/index.js`, import the Swagger configuration and set up the Swagger UI route.
+
+   ```javascript
+   const swaggerUi = require('swagger-ui-express');
+   const swaggerDocs = require('./config/swagger');
+
+   // Swagger documentation route
+   app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+   ```
+
+3. **Document Routes with Swagger Annotations**:
+   - Add JSDoc-style annotations to routes for each endpoint in `routes/users.js` and `routes/auth.js`.
+
+---
+
+### **Example Swagger Annotations in `routes/users.js`**
+
+In `routes/users.js`, use Swagger annotations to define each endpoint's documentation:
+
+```javascript
+/**
+ * @swagger
+ * /users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               username:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *             required:
+ *               - username
+ *               - password
+ *               - email
+ *     responses:
+ *       201:
+ *         description: User created successfully
+ */
+router.post('/', userController.createUser);
+```
