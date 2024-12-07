@@ -1,11 +1,19 @@
 const SalesOrder = require('../models/salesOrder');
 const {invoiceEventEmitter} = require('../../setting/controllers/invoiceEventController');
 const invoiceEventEnum = require('../../setting/controllers/invoiceEventEnum');
+const ProductVariant = require('../../product/models/productVariant');
 
 exports.createSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
-    const { customer, orderLineItems, totalPrice, status} = req.body;
+    const { customer, orderLineItems, status} = req.body;
+    let totalPrice = 0;
+    for (const item of orderLineItems) {
+      const productVariant = await ProductVariant.findById(item.productVariantId);
+      item.price = productVariant.price;
+      totalPrice += item.price * item.quantity;
+    }
+
     const salesOrder = new SalesOrder({customer, orderLineItems, totalPrice, status});
     const savedSalesOrder = await salesOrder.save();
     invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);

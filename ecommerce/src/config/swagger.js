@@ -71,6 +71,10 @@ const doc = {
     {
       name: 'Setting',
       description: 'Endpoints related to setting operations'
+    },
+    {
+      name: 'Payment',
+      description: 'Endpoints related to payment operations'
     }
   ]
 };

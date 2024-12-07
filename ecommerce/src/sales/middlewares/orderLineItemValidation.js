@@ -1,7 +1,7 @@
 const ProductVariant = require('../../product/models/productVariant');
 const mongoose = require('mongoose');
 
-exports.orderLineItemValidation = async (productVariantId, productName, quantity, price, subtotal) => {
+exports.orderLineItemValidation = async (productVariantId, productName, quantity) => {
   if (!mongoose.isValidObjectId(productVariantId)) {
     throw new Error('Product variant id must be an object id.');
   }
@@ -14,15 +14,6 @@ exports.orderLineItemValidation = async (productVariantId, productName, quantity
   }
   if (!(typeof quantity === 'number' && !isNaN(quantity))) {
     throw new Error('Quantity is required.');
-  }
-  if (!(typeof price === 'number' && !isNaN(price))) {
-    throw new Error('Price is required.');
-  }
-  if (productVariant.price !== price) {
-    throw new Error('Price of product variant is not same as the price stored for it');
-  }
-  if (quantity * price !== subtotal) {
-    throw new Error('Subtotal is not true.');
   }
   return true;
 };

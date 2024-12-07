@@ -19,11 +19,6 @@ const orderLineItem = mongoose.Schema({
     type: Number,
     required: true,
     min: 0
-  },
-  subtotal: { //???
-    type: Number,
-    required: true,
-    min: 0
   }
 },{
   timeStamp:true

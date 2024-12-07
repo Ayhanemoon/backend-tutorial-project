@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const orderLineItem = require('./orderLineItem');
+const InvoiceStatusEnum = require('./InvoiceStatusEnum');
 
 const invoiceSchema = new mongoose.Schema({
   customer: {
@@ -24,6 +25,11 @@ const invoiceSchema = new mongoose.Schema({
   invoiceDate: {
     type: Date,
     default: Date.now
+  },
+  status:{
+    type: String,
+    enum: InvoiceStatusEnum.values(),
+    default: InvoiceStatusEnum.DRAFT
   }
   // ,
   // dueDate: {
@@ -39,5 +45,4 @@ const invoiceSchema = new mongoose.Schema({
   // } // Example: "Net 30"
 });
 
-const Invoice = mongoose.model('Invoice', invoiceSchema);
-module.exports = Invoice;
+module.exports = mongoose.model('Invoice', invoiceSchema);;

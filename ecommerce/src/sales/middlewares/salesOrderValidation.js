@@ -32,8 +32,7 @@ exports.orderLineItemsValidation = check('orderLineItems') //unique order line i
   .withMessage('Order line items must be an array.')
   .bail()
   .custom(async (orderLineItems) => orderLineItems.every(async (lineItem) =>
-    await orderLineItemValidation(lineItem.productVariantId, lineItem.productName,
-      lineItem.quantity, lineItem.price, lineItem.subtotal)))
+    await orderLineItemValidation(lineItem.productVariantId, lineItem.productName, lineItem.quantity)))
   .customSanitizer(orderLineItems => orderLineItems.map(lineItem => ({
     productVariantId: lineItem.productVariantId,
     productName: lineItem.productName,
@@ -48,20 +47,6 @@ exports.salesOrderStateValidation = check('status')
     const statusValues = SalesOrderStatusEnum.values();
     if (!statusValues.includes(status)) {
       throw new Error('State is not valid');
-    }
-    return true;
-  });
-
-exports.totalPriceValidation = check('totalPrice').notEmpty()
-  .withMessage('Total amount is required.')
-  .bail()
-  .isNumeric()
-  .withMessage('Total amount should be numeric.')
-  .bail()
-  .custom((totalPrice, {req}) => { //include tax ...
-    const tempTotalPrice = req.body.orderLineItems.reduce((result, lineItem) => result + lineItem.subtotal, 0);
-    if (tempTotalPrice !== totalPrice) {
-      throw new Error('Sum of prices of order line items is not equal with totalPrice');
     }
     return true;
   });
