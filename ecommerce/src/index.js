@@ -1,12 +1,13 @@
 const router = require('express').Router();
 
-const salesOrderRoutes = require('./sales/routes/salesOrders');
 const authRoutes = require('./accounting/routes/auth');
+const userRoutes = require('./accounting/routes/users');
 const categoryRoutes = require('./product/routes/categories');
 const attributeRoutes = require('./product/routes/attributes');
 const productRoutes = require('./product/routes/products');
 const productVariantRoutes = require('./product/routes/productVariants');
 const settingRoutes = require('./setting/routes/settings');
+const salesOrderRoutes = require('./sales/routes/salesOrders');
 const invoiceRoutes = require('./sales/routes/invoices');
 const paymentRoutes = require('./payment/routes/payments');
 
@@ -29,13 +30,14 @@ const swaggerDocument = require('./config/swagger-output.json');
  */
 
 router.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-router.use('/api/v1/sales-order', authenticateJWT, checkValidationPassed, salesOrderRoutes);
 router.use('/api/v1/auth', authRoutes);
+router.use('/api/v1/users', authenticateJWT, checkValidationPassed, userRoutes);
 router.use('/api/v1/categories', authenticateJWT, checkValidationPassed, categoryRoutes);
 router.use('/api/v1/attributes', authenticateJWT, checkValidationPassed, attributeRoutes);
 router.use('/api/v1/products', authenticateJWT, checkValidationPassed, productRoutes);
 router.use('/api/v1/product-variants', authenticateJWT, checkValidationPassed, productVariantRoutes);
 router.use('/api/v1/settings', authenticateJWT, checkValidationPassed, settingRoutes);
+router.use('/api/v1/sales-order', authenticateJWT, checkValidationPassed, salesOrderRoutes);
 router.use('/api/v1/invoices', authenticateJWT, checkValidationPassed, invoiceRoutes);
 router.use('/api/v1/payments', authenticateJWT, checkValidationPassed, paymentRoutes);
 

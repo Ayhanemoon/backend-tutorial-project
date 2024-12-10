@@ -45,20 +45,28 @@ const doc = {
       description: 'Endpoints related to authorization operations'
     },
     {
-      name: 'Product',
-      description: 'Endpoints related to product operations'
+      name: 'User',
+      description: 'Endpoints related to user operations'
     },
     {
       name: 'Category',
       description: 'Endpoints related to category operations'
     },
     {
+      name: 'Attribute',
+      description: 'Endpoints related to attribute operations'
+    },
+    {
+      name: 'Product',
+      description: 'Endpoints related to product operations'
+    },
+    {
       name: 'Product Variant',
       description: 'Endpoints related to product variant operations'
     },
     {
-      name: 'Attribute',
-      description: 'Endpoints related to attribute operations'
+      name: 'Setting',
+      description: 'Endpoints related to setting operations'
     },
     {
       name: 'Sales Order',
@@ -67,10 +75,6 @@ const doc = {
     {
       name: 'Invoice',
       description: 'Endpoints related to invoice operations'
-    },
-    {
-      name: 'Setting',
-      description: 'Endpoints related to setting operations'
     },
     {
       name: 'Payment',
