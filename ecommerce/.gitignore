@@ -1,4 +1,4 @@
 src/.env
 .DS_Store
 .thumbs.db
-node_modules
+ecommerce/node_modules
