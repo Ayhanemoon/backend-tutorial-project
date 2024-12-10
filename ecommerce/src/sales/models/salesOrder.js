@@ -3,11 +3,11 @@ const orderLineItem = require('./orderLineItem');
 const SalesOrderStatusEnum = require('./salesOrderStatusEnum');
 
 const saleOrderSchema = new mongoose.Schema({
-  customer:{
-    customerId :{type: mongoose.Schema.Types.ObjectId, ref: 'Customer', required: true},
-    customerName:{type: String, required: true},
-    customerInvoiceAddress:{type: String, required: false},
-    customerDeliveryAddress:{type: String, required: false}
+  user:{
+    userId :{type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true},
+    userName:{type: String, required: true},
+    userInvoiceAddress:{type: String, required: false},
+    userDeliveryAddress:{type: String, required: false}
   },
   orderLineItems: [orderLineItem],
   totalPrice:{

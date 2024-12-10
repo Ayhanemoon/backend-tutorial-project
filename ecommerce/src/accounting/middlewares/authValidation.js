@@ -1,5 +1,5 @@
 const {check} = require('express-validator');
-const Customer = require('../models/customer');
+const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 
 const usernameMinLen = 3;
@@ -13,9 +13,9 @@ exports.registrationUsernameValidation = check('username')
   .withMessage(`Username must at least ${usernameMinLen} characters long.`)
   .bail()
   .custom(async username => {
-    const customer = await Customer.findOne({username});
-    if (customer) {
-      throw new Error(`Customer with username '${username}' exists.`);
+    const user = await User.findOne({username});
+    if (user) {
+      throw new Error(`User with username '${username}' exists.`);
     }
     return true;
   });
@@ -32,9 +32,9 @@ exports.registrationEmailValidation = check('email')
   .withMessage('Email is required.')
   .bail()
   .custom(async email => {
-    const customer = await Customer.findOne({email});
-    if (customer) {
-      throw new Error(`Customer with email '${email}' exists.`);
+    const user = await User.findOne({email});
+    if (user) {
+      throw new Error(`User with email '${email}' exists.`);
     }
     return true;
   });
@@ -49,7 +49,7 @@ exports.authenticateJWT = check('Authorization')
   .custom((token, req) => {
     try {
       const tempToken = token.slice('Bearer '.length);
-      req.customer = jwt.verify(tempToken, process.env.JWT_SECRET);
+      req.user = jwt.verify(tempToken, process.env.JWT_SECRET);
       return true;
     } catch (err) {
       throw new Error({message:'Access Denied. Invalid token.', err});//return 40?

@@ -70,7 +70,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "customer": {
+                "user": {
                   "example": "any"
                 },
                 "orderLineItems": {
@@ -157,7 +157,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "customer": {
+                "user": {
                   "example": "any"
                 },
                 "orderLineItems": {

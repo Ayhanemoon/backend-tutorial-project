@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 //const address = require('./address');
 
-const CustomerSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -27,12 +27,12 @@ const CustomerSchema = new mongoose.Schema({
   }
   //,
   // balance: {
-  //   type: Number, // Outstanding balance (total owed by the customer)
+  //   type: Number, // Outstanding balance (total owed by the user)
   //   default: 0
   // },
   // isCustomer: {
   //   type: Boolean,
-  //   default: true // True if the entity is a customer
+  //   default: true // True if the entity is a user
   // }
   // isSupplier: {
   //   type: Boolean,
@@ -42,4 +42,4 @@ const CustomerSchema = new mongoose.Schema({
   timestamps: true
 });
 
-module.exports = mongoose.model('Customer', CustomerSchema);
+module.exports = mongoose.model('User', UserSchema);

@@ -1,22 +1,22 @@
-const Customer = require('../models/customer');
+const User = require('../models/user');
 const mongoose = require('mongoose');
 
-exports.customerValidation = async(customerId, customerUsername, customerInvoiceAddress, customerDeliveryAddress) => {
-  if (!mongoose.isValidObjectId(customerId)) {
-    throw new Error('Customer id must be an object id.');
+exports.userValidation = async(userId, userUsername, userInvoiceAddress, userDeliveryAddress) => {
+  if (!mongoose.isValidObjectId(userId)) {
+    throw new Error('User id must be an object id.');
   }
-  const customer = await Customer.findById(customerId);
-  if (!customer) {
-    throw new Error(`Customer with id '${customerId}' does not exists.`);
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error(`User with id '${userId}' does not exists.`);
   }
-  if (customer.username !== customerUsername) {
-    throw new Error('Customer name is not same as the name stored for the customer id.');
+  if (user.username !== userUsername) {
+    throw new Error('User name is not same as the name stored for the user id.');
   }
-  if (customer.invoiceAddress !== customerInvoiceAddress) {
-    throw new Error('Invoice address is not same as the address stored for the customer id.');
+  if (user.invoiceAddress !== userInvoiceAddress) {
+    throw new Error('Invoice address is not same as the address stored for the user id.');
   }
-  if (customer.deliveryAddress !== customerDeliveryAddress) {
-    throw new Error('Delivery address is not same as the address stored for the customer id.');
+  if (user.deliveryAddress !== userDeliveryAddress) {
+    throw new Error('Delivery address is not same as the address stored for the user id.');
   }
   return true;
 };

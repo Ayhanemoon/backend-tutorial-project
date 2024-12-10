@@ -3,13 +3,13 @@ const orderLineItem = require('./orderLineItem');
 const InvoiceStatusEnum = require('./InvoiceStatusEnum');
 
 const invoiceSchema = new mongoose.Schema({
-  customer: {
-    customerId: {
+  user: {
+    userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Customer',
+      ref: 'User',
       required: true
     },
-    customerName: String
+    userName: String
   },
   orderId: {
     type: mongoose.Schema.Types.ObjectId,

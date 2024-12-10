@@ -7,9 +7,9 @@ exports.createInvoice = async (salesOrder) => {
       return;
     }
     const invoice = new Invoice({
-      customer: {
-        customerId: salesOrder.customer.customerId,
-        customerName: salesOrder.customer.customerName
+      user: {
+        userId: salesOrder.user.userId,
+        userName: salesOrder.user.userName
       },
       orderId: salesOrder._id,
       orderLineItems: salesOrder.orderLineItems,

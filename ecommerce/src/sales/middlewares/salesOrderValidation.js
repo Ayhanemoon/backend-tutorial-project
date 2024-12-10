@@ -1,6 +1,6 @@
 const SalesOrder = require('../models/salesOrder');
 const {orderLineItemValidation} = require('../middlewares/orderLineItemValidation');
-const {customerValidation} = require('../../accounting/middlewares/customerValidation');
+const {userValidation} = require('../../accounting/middlewares/userValidation');
 const SalesOrderStatusEnum = require('../models/salesOrderStatusEnum');
 const {check} = require('express-validator');
 const mongoose = require('mongoose');
@@ -20,12 +20,12 @@ exports.salesOrderIdValidation = check('salesOrderId').notEmpty()
     return true;
   });
 
-exports.customerValidation = check('customer')
+exports.userValidation = check('user')
   .notEmpty()
-  .withMessage('Customer info is required.')
+  .withMessage('User info is required.')
   .bail()
-  .custom(async(customer) => await customerValidation(customer.customerId, customer.customerName,
-    customer.customerInvoiceAddress, customer.customerDeliveryAddress));
+  .custom(async(user) => await userValidation(user.userId, user.userName,
+    user.userInvoiceAddress, user.userDeliveryAddress));
 
 exports.orderLineItemsValidation = check('orderLineItems') //unique order line item
   .isArray()

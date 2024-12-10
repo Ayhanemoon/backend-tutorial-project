@@ -6,7 +6,7 @@ const ProductVariant = require('../../product/models/productVariant');
 exports.createSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
-    const { customer, orderLineItems, status} = req.body;
+    const { user, orderLineItems, status} = req.body;
     let totalPrice = 0;
     for (const item of orderLineItems) {
       const productVariant = await ProductVariant.findById(item.productVariantId);
@@ -14,7 +14,7 @@ exports.createSalesOrder = async(req, res) => {
       totalPrice += item.price * item.quantity;
     }
 
-    const salesOrder = new SalesOrder({customer, orderLineItems, totalPrice, status});
+    const salesOrder = new SalesOrder({user, orderLineItems, totalPrice, status});
     const savedSalesOrder = await salesOrder.save();
     invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
     res.status(201).json(savedSalesOrder);
@@ -49,9 +49,9 @@ exports.getSalesOrderById = async(req, res) => {
 exports.updateSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
-    const { customer, orderLineItems, totalPrice, status} = req.body;
+    const { user, orderLineItems, totalPrice, status} = req.body;
     const salesOrder = await SalesOrder.findByIdAndUpdate(req.params.salesOrderId,
-      {customer, orderLineItems, totalPrice, status},
+      {user, orderLineItems, totalPrice, status},
       {projection:'-__v -_id', new:false, runValidators:true});
     // if (!salesOrder) {
     //   res.status(404).json('Sales order not found.');
