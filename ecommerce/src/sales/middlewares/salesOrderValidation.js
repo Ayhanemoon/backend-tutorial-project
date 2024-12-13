@@ -1,4 +1,3 @@
-const SalesOrder = require('../models/salesOrder');
 const {orderLineItemValidation} = require('../middlewares/orderLineItemValidation');
 const {userValidation} = require('../../accounting/middlewares/userValidation');
 const SalesOrderStatusEnum = require('../models/salesOrderStatusEnum');
@@ -11,14 +10,7 @@ exports.salesOrderIdValidation = check('salesOrderId').notEmpty()
   .custom(salesOrderId => mongoose.isValidObjectId(salesOrderId))
   .withMessage('Sales order id must be an object id.')
   .bail()
-  .customSanitizer(salesOrderId =>  mongoose.Types.ObjectId.createFromHexString(salesOrderId))
-  .custom(async (salesOrderId) => {
-    const salesOrder = await SalesOrder.findById(salesOrderId);
-    if (!salesOrder) {
-      throw new Error(`Sales order with id '${salesOrderId}' does not exists.`);
-    }
-    return true;
-  });
+  .customSanitizer(salesOrderId =>  mongoose.Types.ObjectId.createFromHexString(salesOrderId));
 
 exports.userValidation = check('user')
   .notEmpty()

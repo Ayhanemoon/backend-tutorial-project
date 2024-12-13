@@ -1,4 +1,3 @@
-const Product = require('../models/product');
 const Category = require('../models/category');
 const {attributeValidation} = require('../middlewares/attributeValidation');
 const {check} = require('express-validator');
@@ -8,14 +7,7 @@ exports.productIdValidation = check('productId')
   .custom(productId => mongoose.isValidObjectId(productId))
   .withMessage('Product id must be an object id.')
   .bail()
-  .customSanitizer(productId => mongoose.Types.ObjectId.createFromHexString(productId))
-  .custom(async (productId) => {
-    const product = await Product.findById(productId);
-    if (!product) {
-      throw new Error(`Product with id '${productId}' does not exists.`);
-    }
-    return true;
-  });
+  .customSanitizer(productId => mongoose.Types.ObjectId.createFromHexString(productId));
 
 exports.productNameValidation = check('name')
   .notEmpty()

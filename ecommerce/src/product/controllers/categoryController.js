@@ -29,6 +29,9 @@ exports.getCategoryById = async(req, res) => {
   // #swagger.tags = ['Category']
   try {
     const category = await Category.findById(req.params.categoryId, '-__v -_id -updatedAt');
+    if (!category) {
+      return res.status(404).json({message:'Category not found.'});
+    }
     return res.status(200).json(category);
   } catch (error) {
     return res.status(500).json({message: 'Error retreiving category.', error});
@@ -43,6 +46,9 @@ exports.updateCategory = async(req, res) => {
       req.params.categoryId,
       {name, parent, attributes},
       {projection:'-__v -_id', new:true, runValidators:true});
+    if (!category) {
+      return res.status(404).json({message:'Category not found.'});
+    }
     return res.status(201).json({message: 'Category updated successfully', category});
   } catch (error) {
     return res.status(500).json({message: 'Error updating category.', error});
@@ -52,7 +58,10 @@ exports.updateCategory = async(req, res) => {
 exports.deleteCategory = async(req, res) => {
   // #swagger.tags = ['Category']
   try {
-    await Category.findByIdAndDelete(req.params.categoryId);
+    const category = await Category.findByIdAndDelete(req.params.categoryId);
+    if (!category) {
+      return res.status(404).json({message:'Category not found.'});
+    }
     return res.status(204).send();
   } catch (error) {
     return res.status(500).json({message: 'Error deleting category', error});
@@ -64,6 +73,9 @@ exports.updateAttributes = async(req, res) => {//TODO add product variants for p
   try {
     const {attributes} = req.body;
     const category = await Category.findById(req.params.categoryId);
+    if (!category) {
+      return res.status(404).json({message:'Category not found.'});
+    }
     category.attributes = attributes;
     await category.save();
     return res.status(201).json({message: 'Attributes updated successfully', category});

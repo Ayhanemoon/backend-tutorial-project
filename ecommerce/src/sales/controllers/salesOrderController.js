@@ -37,9 +37,9 @@ exports.getSalesOrderById = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
     const salesOrder = await SalesOrder.findById(req.params.salesOrderId);
-    // if (!salesOrder) {
-    //   return res.status(404).json({message:'Sales order not found.'});
-    // }
+    if (!salesOrder) {
+      return res.status(404).json({message:'Sales order not found.'});
+    }
     return res.status(200).json(salesOrder);
   } catch (error) {
     res.status(500).json({message:'Error retreiving sales order.', error});
@@ -53,9 +53,9 @@ exports.updateSalesOrder = async(req, res) => {
     const salesOrder = await SalesOrder.findByIdAndUpdate(req.params.salesOrderId,
       {user, orderLineItems, totalPrice, status},
       {projection:'-__v -_id', new:false, runValidators:true});
-    // if (!salesOrder) {
-    //   res.status(404).json('Sales order not found.');
-    // }
+    if (!salesOrder) {
+      res.status(404).json('Sales order not found.');
+    }
     if (salesOrder.status !== status) {
       invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
     }
@@ -68,10 +68,10 @@ exports.updateSalesOrder = async(req, res) => {
 exports.deleteSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
-    await SalesOrder.findByIdAndDelete(req.params.salesOrderId);
-    // if (!salesOrder) {
-    //   res.status(404).json('Sales order not found.');
-    // }
+    const salesOrder = await SalesOrder.findByIdAndDelete(req.params.salesOrderId);
+    if (!salesOrder) {
+      res.status(404).json('Sales order not found.');
+    }
     return res.status(204).json({message:'Sales order deleted successfully'});
   } catch (error) {
     res.status(500).json({message:'Error deleting sales order.', error});
@@ -82,9 +82,9 @@ exports.partiallyUpdateSalesOrder = async(req, res) => {
   // #swagger.tags = ['Sales Order']
   try {
     const salesOrder = await SalesOrder.findById(req.params.salesOrderId);
-    // if (!salesOrder) {
-    //   res.status(404).json('Sales order not found.');
-    // }
+    if (!salesOrder) {
+      res.status(404).json('Sales order not found.');
+    }
     salesOrder.status = req.body.status;
     await salesOrder.save();
     invoiceEventEmitter.emit(invoiceEventEnum.SALES_ORDER_STATUS_CHANGED, salesOrder);
